@@ -8,6 +8,6 @@ docker run -it --rm \
   -v "$PWD/config":/home/dev \
   -v "$PWD":/home/dev/work \
   -w /home/dev/work \
-  llm-terminal
+  ghcr.io/onixldlc/llm-terminal:latest
 ```
 
