@@ -18,9 +18,15 @@ RUN wget -q https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz \
  && tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz \
  && rm go${GO_VERSION}.linux-amd64.tar.gz
 
+# sudo (passwordless for dev)
+RUN --mount=type=cache,target=/var/cache/apt \
+    --mount=type=cache,target=/var/lib/apt/lists \
+    apt-get update && apt-get install -y --no-install-recommends sudo \
+ && echo "dev ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/dev
+
 # install claude code globally
 RUN npm install -g @anthropic-ai/claude-code
- 
+
 # match host user. pass at build: --build-arg UID=$(id -u) --build-arg GID=$(id -g)
 ARG UID=1000
 ARG GID=1000
