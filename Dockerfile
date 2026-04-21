@@ -12,6 +12,12 @@ RUN --mount=type=cache,target=/var/cache/apt \
     apt-get update && apt-get install -y --no-install-recommends \
         python3 python3-pip python3-venv python3-dev
 
+# go
+ARG GO_VERSION=1.26.2
+RUN wget -q https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz \
+ && tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz \
+ && rm go${GO_VERSION}.linux-amd64.tar.gz
+
 # install claude code globally
 RUN npm install -g @anthropic-ai/claude-code
  
