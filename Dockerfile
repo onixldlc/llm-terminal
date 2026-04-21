@@ -1,14 +1,11 @@
 FROM node:22-bookworm-slim
  
-# deps: git for repos, ripgrep for claude search, curl/ca-certs for net
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        ca-certificates \
-        ripgrep \
-        curl \
-        less \
-        git \
-    && rm -rf /var/lib/apt/lists/*
- 
+# base deps
+RUN --mount=type=cache,target=/var/cache/apt \
+    --mount=type=cache,target=/var/lib/apt/lists \
+    apt-get update && apt-get install -y --no-install-recommends \
+        ca-certificates ripgrep wget curl less git
+
 # install claude code globally
 RUN npm install -g @anthropic-ai/claude-code
  
