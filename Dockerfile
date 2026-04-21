@@ -39,4 +39,8 @@ WORKDIR $HOME/work
 ENV PATH="/usr/local/go/bin:$HOME/.cargo/bin:$HOME/go/bin:$PATH"
 ENV GOPATH="$HOME/go"
 
+# rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+  | sh -s -- -y --default-toolchain stable --profile minimal
+
 ENTRYPOINT ["claude"]
