@@ -1,3 +1,5 @@
+ARG TARGETARCH
+
 FROM node:22-bookworm-slim
  
 # base deps
