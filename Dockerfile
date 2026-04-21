@@ -1,14 +1,14 @@
 FROM node:22-bookworm-slim
  
 # base deps
-RUN --mount=type=cache,target=/var/cache/apt \
-    --mount=type=cache,target=/var/lib/apt/lists \
+RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} \
+    --mount=type=cache,target=/var/lib/apt/lists,id=apt-cache-${TARGETARCH} \
     apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates ripgrep wget curl less git
 
 # python
-RUN --mount=type=cache,target=/var/cache/apt \
-    --mount=type=cache,target=/var/lib/apt/lists \
+RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} \
+    --mount=type=cache,target=/var/lib/apt/lists,id=apt-cache-${TARGETARCH} \
     apt-get update && apt-get install -y --no-install-recommends \
         python3 python3-pip python3-venv python3-dev
 
@@ -19,8 +19,8 @@ RUN wget -q https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz \
  && rm go${GO_VERSION}.linux-amd64.tar.gz
 
 # sudo (passwordless for dev)
-RUN --mount=type=cache,target=/var/cache/apt \
-    --mount=type=cache,target=/var/lib/apt/lists \
+RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} \
+    --mount=type=cache,target=/var/lib/apt/lists,id=apt-cache-${TARGETARCH} \
     apt-get update && apt-get install -y --no-install-recommends sudo \
  && echo "dev ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/dev
 
