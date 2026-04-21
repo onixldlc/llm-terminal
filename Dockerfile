@@ -6,6 +6,12 @@ RUN --mount=type=cache,target=/var/cache/apt \
     apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates ripgrep wget curl less git
 
+# python
+RUN --mount=type=cache,target=/var/cache/apt \
+    --mount=type=cache,target=/var/lib/apt/lists \
+    apt-get update && apt-get install -y --no-install-recommends \
+        python3 python3-pip python3-venv python3-dev
+
 # install claude code globally
 RUN npm install -g @anthropic-ai/claude-code
  
