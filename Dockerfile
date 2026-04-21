@@ -2,11 +2,11 @@ FROM node:22-bookworm-slim
  
 # deps: git for repos, ripgrep for claude search, curl/ca-certs for net
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        git \
         ca-certificates \
-        curl \
         ripgrep \
+        curl \
         less \
+        git \
     && rm -rf /var/lib/apt/lists/*
  
 # install claude code globally
