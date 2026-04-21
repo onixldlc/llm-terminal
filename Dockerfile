@@ -35,5 +35,8 @@ RUN userdel -r node 2>/dev/null || true \
  
 USER dev
 WORKDIR $HOME/work
- 
+
+ENV PATH="/usr/local/go/bin:$HOME/.cargo/bin:$HOME/go/bin:$PATH"
+ENV GOPATH="$HOME/go"
+
 ENTRYPOINT ["claude"]
