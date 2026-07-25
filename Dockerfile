@@ -54,7 +54,9 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
   | sh -s -- -y --default-toolchain stable --profile minimal
 
 # java
-RUN apt-get install -y --no-install-recommends \
-  default-jre-headless
+RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} \
+    --mount=type=cache,target=/var/lib/apt/lists,id=apt-lists-${TARGETARCH} \
+    apt-get update && apt-get install -y --no-install-recommends \
+        default-jre-headless
 
 ENTRYPOINT ["claude"]
