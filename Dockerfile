@@ -53,4 +53,8 @@ ENV GOPATH="$HOME/go"
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
   | sh -s -- -y --default-toolchain stable --profile minimal
 
+# java
+RUN apt-get install -y --no-install-recommends \
+  default-jre-headless
+
 ENTRYPOINT ["claude"]
