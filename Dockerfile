@@ -18,8 +18,14 @@ RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} \
 # go
 ARG GO_VERSION=1.26.2
 RUN wget -q https://go.dev/dl/go${GO_VERSION}.linux-${TARGETARCH}.tar.gz \
- && tar -C /usr/local -xzf go${GO_VERSION}.linux-${TARGETARCH}.tar.gz \
- && rm go${GO_VERSION}.linux-${TARGETARCH}.tar.gz
+    && tar -C /usr/local -xzf go${GO_VERSION}.linux-${TARGETARCH}.tar.gz \
+    && rm go${GO_VERSION}.linux-${TARGETARCH}.tar.gz
+
+# java
+RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} \
+    --mount=type=cache,target=/var/lib/apt/lists,id=apt-lists-${TARGETARCH} \
+    apt-get update && apt-get install -y --no-install-recommends \
+        default-jre-headless
 
 # sudo (passwordless for dev)
 RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} \
@@ -52,11 +58,5 @@ ENV GOPATH="$HOME/go"
 # rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
   | sh -s -- -y --default-toolchain stable --profile minimal
-
-# java
-RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} \
-    --mount=type=cache,target=/var/lib/apt/lists,id=apt-lists-${TARGETARCH} \
-    apt-get update && apt-get install -y --no-install-recommends \
-        default-jre-headless
 
 ENTRYPOINT ["claude"]
