@@ -27,6 +27,7 @@ RUN --mount=type=cache,target=/var/cache/apt,id=apt-cache-${TARGETARCH} \
     apt-get update && apt-get install -y --no-install-recommends sudo \
  && echo "dev ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/dev
 
+# version v2.1.220
 # install claude code globally
 RUN npm install -g @anthropic-ai/claude-code
 
